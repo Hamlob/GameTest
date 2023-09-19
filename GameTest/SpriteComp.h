@@ -8,37 +8,24 @@ private:
 	TransformComp* _transform_p;
 	SDL_Texture* _texture_p;
 	SDL_Rect _srcRect, _destRect;
+	int _texID;
 
 public:
 
 	SpriteComp() = default;
-	SpriteComp(const char* path) {
-		setTexture(path);
-	}
 
-	/*
 	SpriteComp(int texID) {
 		setTexture(texID);
 	}
-	*/
 
 	~SpriteComp() {
-		SDL_DestroyTexture(_texture_p);
+		TextureManager::UnloadTexture(_texID);
 	}
-
-	void setTexture(const char* path) {
-		//destroy old texture to free up memory preventing memory leak
-		if (nullptr != _transform_p) {
-			SDL_DestroyTexture(_texture_p);
-		}
-		_texture_p = TextureManager::LoadTexture(path);
-	}
-
-	/*
+	
 	void setTexture(int texID) {
+		_texID = texID;
 		_texture_p = TextureManager::LoadTexture(texID);
 	}
-	*/
 
 	void init() override {
 		_transform_p = &entity->getComponent<TransformComp>();

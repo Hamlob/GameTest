@@ -58,13 +58,13 @@ void Game::init(const char* p_title, int xpos, int ypos, int width, int height, 
 
 	//create a player object
 	player.addComponent<TransformComp>(100, 100, 64, 64, 1);
-	player.addComponent<SpriteComp>("textures/player.png");
+	player.addComponent<SpriteComp>(PLAYER_ID);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComp>("player");
 
 	//create a wall
 	wall.addComponent<TransformComp>(300.0f, 300.0f, 300, 20, 1);
-	wall.addComponent<SpriteComp>("textures/dirt.png");
+	wall.addComponent<SpriteComp>(DIRT_ID);
 	wall.addComponent<ColliderComp>("wall");
 }
 
@@ -100,10 +100,10 @@ void Game::update() {
 
 			wall_hit = !wall_hit;
 			if (true == wall_hit) {
-				player.getComponent<SpriteComp>().setTexture("textures/enemy.png");
+				player.getComponent<SpriteComp>().setTexture(ENEMY_ID);
 			}
 			else {
-				player.getComponent<SpriteComp>().setTexture("textures/player.png");
+				player.getComponent<SpriteComp>().setTexture(PLAYER_ID);
 			}
 		}
 	}

@@ -26,9 +26,9 @@ int defaultMap[MAP_HEIGHT][MAP_WIDTH] = {
 
 Map::Map() {
 	//move all the texture loading into texture manager and make them static
-	_dirt = TextureManager::LoadTexture("textures/dirt.png");
-	_grass = TextureManager::LoadTexture("textures/grass.png");
-	_water = TextureManager::LoadTexture("textures/water.png");
+	_dirt = TextureManager::LoadTexture(2);
+	_grass = TextureManager::LoadTexture(1);
+	_water = TextureManager::LoadTexture(0);
 
 	LoadMap(defaultMap);
 

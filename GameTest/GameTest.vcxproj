@@ -155,6 +155,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="KeyboardController.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="textures.h" />
     <ClInclude Include="TileComp.h" />
     <ClInclude Include="TransformComp.h" />
     <ClInclude Include="SpriteComp.h" />

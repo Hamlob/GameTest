@@ -95,6 +95,9 @@
     <ClInclude Include="TileComp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="textures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\player.png">

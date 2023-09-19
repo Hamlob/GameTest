@@ -11,7 +11,6 @@ public:
 
 	SDL_Rect tileRect;
 	int tileID;
-	const char* path;
 
 
 	TileComp() = default;
@@ -21,20 +20,6 @@ public:
 		tileRect.w = w;
 		tileRect.h = h;
 		tileID = id;
-
-		switch (tileID)
-		{
-		case 0:
-			path = "textures/water.png";
-			break;
-		case 1:
-			path = "textures/grass.png";
-			break;
-		case 2:
-			path = "textures/earth.png";
-		default:
-			break;
-		}
 	}
 
 	//creates transform and sprite components with corresponding dimensions (transform) and texture(sprite) to it
@@ -42,7 +27,7 @@ public:
 		entity->addComponent<TransformComp>(tileRect.x, tileRect.y, tileRect.h, tileRect.w);
 		transform = &entity->getComponent<TransformComp>();
 
-		entity->addComponent<SpriteComp>(path);
+		entity->addComponent<SpriteComp>(tileID);
 		sprite = &entity->getComponent<SpriteComp>();
 
 	}

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+#include "textures.h"
 
 class ColliderComp;	//forward declaration
 
