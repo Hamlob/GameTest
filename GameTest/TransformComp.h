@@ -2,6 +2,13 @@
 #include "ECS.h"
 #include "Vector2D.h"
 
+/**
+	 * .
+	 *
+	 * \param (none)
+	 * \param (x, y)
+	 * \param (x, y, h, w, scale=1)
+	 */
 class TransformComp : public Component
 {
 public:
@@ -25,8 +32,8 @@ public:
 		position.x = x;
 		position.y = y;
 	}
-
-	TransformComp(float x, float y, int h, int w, int sc) {
+	
+	TransformComp(float x, float y, int h, int w, int sc = 1) {
 		position.x = x;
 		position.y = y;
 		height = h;

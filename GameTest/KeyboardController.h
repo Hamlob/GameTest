@@ -10,7 +10,7 @@ public:
 
 	//init function gets the pointer to the transform component of this game object (entity)
 	void init() override {
-		transform = &entity_p->getComponent<TransformComp>();
+		transform = &entity->getComponent<TransformComp>();
 	}
 
 	void update() override {

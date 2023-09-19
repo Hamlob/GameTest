@@ -44,7 +44,7 @@ typedef std::array<Component*, maxComponents> COMP_ARRAY;
 class Component
 {
 public:
-	Entity* entity_p;
+	Entity* entity;
 
 	virtual void init() {}
 	virtual void update() {}
@@ -64,12 +64,12 @@ public:
 	
 	//Cycles through all components of the entityand updates them
 	void update() {
-		for (auto& c : _components_p) c->update();
+		for (auto& c : _components) c->update();
 	}
 
 	//Draws function draws this entity.
 	void draw() {
-		for (auto& c : _components_p) c->draw();
+		for (auto& c : _components) c->draw();
 	}
 
 	bool isActive() const { return _active; }
@@ -101,11 +101,11 @@ public:
 
 		T* newComp(new T(std::forward<TArgs>(mArgs)...));	//forward is a wrapper for passing typename args as  actual function
 		
-		newComp->entity_p = this;	//link the component to this entity
+		newComp->entity = this;	//link the component to this entity
 
 		std::unique_ptr<T> uPtr{ newComp };	//create a unique pointer to the new component
 
-		_components_p.emplace_back(std::move(uPtr)); //appends the pointer the end of the vector holding component pointers
+		_components.emplace_back(std::move(uPtr)); //appends the pointer the end of the vector holding component pointers
 		
 		COMP_TYPE_ID typeID = getCOMP_TYPE_ID<T>();	//check the type id of the new component
 		_compArray[typeID] = newComp;			//store the pointer in comp array at corresponding position according to typeID.
@@ -130,7 +130,7 @@ public:
 private:
 
 	bool _active = true;
-	std::vector<std::unique_ptr<Component>> _components_p;	//vector holding the pointers to all components of the given entity
+	std::vector<std::unique_ptr<Component>> _components;	//vector holding the pointers to all components of the given entity
 
 	COMP_ARRAY _compArray;
 	COMP_BITSET _compBitset;
@@ -144,12 +144,12 @@ public:
 
 	//updates all active entities
 	void update() {
-		for (auto& e : _entities_p) e->update();
+		for (auto& e : entities) e->update();
 	}
 
 	//draws all active entities
 	void draw() {
-		for (auto& e : _entities_p) e->draw();
+		for (auto& e : entities) e->draw();
 	}
 
 	void refresh() {
@@ -157,14 +157,14 @@ public:
 		//erase function goes through the iterator and removes the elements. 
 		//remove_if iterator is used to prevent skipping of elements that happens 
 		//when an array is changed while iterating over it.
-		_entities_p.erase(		
+		entities.erase(		
 			std::remove_if		//remove_if returns an iterator for the elements satifsying the condition returned by lambda function
 			(
-				_entities_p.begin(),	//start for the remove if 
-				_entities_p.end(),		//end for the remove if
+				entities.begin(),	//start for the remove if 
+				entities.end(),		//end for the remove if
 				[](const std::unique_ptr<Entity>& e) { return false == e->isActive(); }	//lambda function used to satisfy the condition deciding which elements to be removed (true means remove)
 			),
-			_entities_p.end()		//end of the array
+			entities.end()		//end of the array
 		);
 	}
 	//https://youtu.be/XsvI8Sng6dk?list=PLhfAbcv9cehhkG7ZQK0nfIGJC_C-wSLrx&t=1519
@@ -173,10 +173,10 @@ public:
 	Entity& addEntity() {
 		Entity* e = new Entity();
 		std::unique_ptr<Entity> uPtr(e);
-		_entities_p.emplace_back(std::move(uPtr));
+		entities.emplace_back(std::move(uPtr));
 		return *e;
 	}
 
 private:
-	std::vector<std::unique_ptr<Entity>> _entities_p;	//vector holding the pointers to all entities
+	std::vector<std::unique_ptr<Entity>> entities;	//vector holding the pointers to all entities
 };

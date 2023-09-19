@@ -16,16 +16,32 @@ public:
 		setTexture(path);
 	}
 
+	/*
+	SpriteComp(int texID) {
+		setTexture(texID);
+	}
+	*/
+
 	~SpriteComp() {
 		SDL_DestroyTexture(_texture_p);
 	}
 
 	void setTexture(const char* path) {
+		//destroy old texture to free up memory preventing memory leak
+		if (nullptr != _transform_p) {
+			SDL_DestroyTexture(_texture_p);
+		}
 		_texture_p = TextureManager::LoadTexture(path);
 	}
 
+	/*
+	void setTexture(int texID) {
+		_texture_p = TextureManager::LoadTexture(texID);
+	}
+	*/
+
 	void init() override {
-		_transform_p = &entity_p->getComponent<TransformComp>();
+		_transform_p = &entity->getComponent<TransformComp>();
 
 		_srcRect.x = _srcRect.y = 0;
 		_srcRect.w = _transform_p->width;

@@ -3,6 +3,9 @@
 #include "SDL.h"
 #include <stdio.h>
 #include <iostream>
+#include <vector>
+
+class ColliderComp;	//forward declaration
 
 class Game
 {
@@ -36,7 +39,12 @@ public:
 
 	//global renderer used by all classes
 	static SDL_Renderer* renderer;
+
+	//event for input handling
 	static SDL_Event event;
+
+	//items to check collision for
+	static std::vector<ColliderComp*> colliders;
 
 private:
 	int _count;

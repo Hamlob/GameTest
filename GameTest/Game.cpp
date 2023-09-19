@@ -9,6 +9,8 @@ Map* map;
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;		//only one event at a time that changes depending on the input
 
+std::vector<ColliderComp*> Game::colliders;
+
 //create entity manager and create a player as an entity
 EntityManager manager;
 auto& player(manager.addEntity());
@@ -82,21 +84,31 @@ void Game::update() {
 
 	manager.refresh();
 	manager.update();
-
+	
+	/* auto
+	Choose auto x when you want to work with copies.
+	Choose auto& x when you want to work with original itemsand may modify them.
+	Choose auto const& x when you want to work with original itemsand will not modify them.
+	*/
+		
 	//check for collision
-	if (Collision::AABB(player.getComponent<ColliderComp>().collider, wall.getComponent<ColliderComp>().collider)) {
-		player.getComponent<TransformComp>().velocity * -1;		//function that multiplies the vector (velocity) by integer, does not need to be assigned to a variable, same ase setZero() function
-	
-		wall_hit = !wall_hit;
-	
+	for (auto const &col : colliders) 
+	{
+		if (Collision::AABB(player.getComponent<ColliderComp>(), *col)) 
+		{
+			player.getComponent<TransformComp>().velocity * -1;		//function that multiplies the vector (velocity) by integer, does not need to be assigned to a variable, same ase setZero() function
+
+			wall_hit = !wall_hit;
+			if (true == wall_hit) {
+				player.getComponent<SpriteComp>().setTexture("textures/enemy.png");
+			}
+			else {
+				player.getComponent<SpriteComp>().setTexture("textures/player.png");
+			}
+		}
 	}
 
-	if (true == wall_hit) {
-		player.getComponent<SpriteComp>().setTexture("textures/enemy.png");
-	}
-	else {
-		player.getComponent<SpriteComp>().setTexture("textures/player.png");
-	}
+	
 
 
 }
